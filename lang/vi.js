@@ -25,6 +25,7 @@ export const transSuccesss = {
   category_deleted: "Xóa category thành công",
   tag_created: "Tạo mới tag thành công",
   tag_updated: "Sửa đổi tag thành công",
-  tag_deleted: "Xóa tag thành công"
+  tag_deleted: "Xóa tag thành công",
+  delete_success: "Xóa người dùng thành công"
 }
 

@@ -84,3 +84,34 @@ module.exports.getAllUsers = async (req, res) =>{
         console.log(err);
     }
 }
+
+module.exports.deleteUser = async (req, res) =>{
+    let id = req.params.id;
+    let loginUser = req.loginUser;
+  
+    try{
+        let currentUser = await userService.getUserByUserName(loginUser.username);
+
+        if(!currentUser){
+           return res.json(transErrors.not_login);
+        }
+
+        if(currentUser.type < 3){
+            return res.json(transErrors.have_not_permission);
+        }
+
+        let targetUser = await userService.getUserById(id);
+
+        if(!targetUser){
+            return res.json(transErrors.target_user_undefined);
+        }
+
+        await userService.deleteUser(id);
+
+        return res.json(transSuccesss.delete_success);
+    }
+    catch(err){
+        console.log(err);
+    }
+
+}

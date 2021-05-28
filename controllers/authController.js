@@ -5,9 +5,13 @@ import { transErrors, transSuccesss } from "../lang/vi"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
+const config = require("../config/config.json")
+const timeNow = require("../helpers/getTimeNow")
 
-const tokenSecretKey = '123456';
-const refeshTokenSecretkey = '654321'
+const tokenSecretKey = config.development.token.secret_access_token;
+const refeshTokenSecretkey = config.development.token.secret_refresh_token;
+const sTokenExprireIn = config.development.token.secret_access_token_expire_in;
+const rTokenExprireIn = config.development.token.secret_refresh_token_expire_in;
 
 module.exports.login = async (req, res) =>{
   let username = req.body.username;
@@ -27,9 +31,19 @@ module.exports.login = async (req, res) =>{
         gender: user.gender
       }
 
+      
       if(bcrypt.compareSync(password, passwordHash)){
-        let token = jwt.sign(dataUser, tokenSecretKey)
-        let refeshToken = jwt.sign(dataUser, refeshTokenSecretkey)
+        const getTimeNow = timeNow.timeNow;
+
+        // const aTokenExprireIn = getTimeNow.getSeconds() + +sTokenExprireIn;
+        // const rTokenExprieIn = getTimeNow.getSeconds() + +rTokenExprireIn;
+
+        let token = jwt.sign(dataUser, tokenSecretKey, { 
+          expiresIn: getTimeNow.getSeconds() + +sTokenExprireIn
+        })
+        let refeshToken = jwt.sign(dataUser, refeshTokenSecretkey,{
+          expiresIn: getTimeNow.getSeconds() + +rTokenExprireIn
+        })
 
         req.headers.authorization = token
 
@@ -50,12 +64,12 @@ module.exports.login = async (req, res) =>{
         res.status(203).json(result);
       }
       else{
-        res.status.json(transErrors.login_failed)
+        res.status(404).json(transErrors.login_failed)
       }
       
     }
     else{
-      res.status.json(transErrors.user_undefined)
+      res.status(404).json(transErrors.user_undefined)
      }
   }
   catch(err){
@@ -95,14 +109,12 @@ module.exports.register = async (req, res) =>{
 
 module.exports.refreshToken = async (req, res) =>{
 
-  let loginUser = req.loginUser;
-
-  let { refreshToken } = req.body;
+  let { username, refreshToken } = req.body;
 
   // console.log(refreshToken)
   
   try{
-    let user = await authService.findUserByUserName(loginUser.username);
+    let user = await authService.findUserByUserName(username);
 
     // console.log(user);
     
@@ -123,7 +135,11 @@ module.exports.refreshToken = async (req, res) =>{
       gender: user.gender
     }
 
-    let acessToken = jwt.sign(dataUser, tokenSecretKey)
+    const getTimeNow = timeNow.timeNow;
+    
+    let acessToken = jwt.sign(dataUser, tokenSecretKey, {
+      expiresIn: getTimeNow.getSeconds() + +sTokenExprireIn
+    })
     // let newUser = await authService.createUser(username, password, fullName, gender);
     req.headers.authorization = acessToken
 

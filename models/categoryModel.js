@@ -13,4 +13,10 @@ let Category = sequelize.define('Category', {
   postId: Sequelize.INTEGER
 });
 
+Category.associate = function (models) {
+  Category.belongsTo(models.postModel, {
+    foreignKey: 'postId',
+ })
+}
+
 module.exports = Category;

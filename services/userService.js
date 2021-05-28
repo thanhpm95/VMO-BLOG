@@ -38,10 +38,21 @@ function updateUserType(id, type){
 }
 
 
+function deleteUser(id){
+    return Users.destroy({
+            where:{
+                id
+            }
+        }
+    )
+}
+
+
 
 module.exports = {
     getAllUsers : getAllUsers,
     getUserById : getUserById,
     getUserByUserName: getUserByUserName,
-    updateUserType: updateUserType
+    updateUserType: updateUserType,
+    deleteUser: deleteUser
 }

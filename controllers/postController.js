@@ -41,6 +41,7 @@ module.exports.createNewPost = async (req, res) =>{
   let loginUser = req.loginUser;
   let title = req.body.title;
   let content = req.body.content;
+  let categoryId = req.body.categoryId;
 
   try{
 
@@ -53,7 +54,8 @@ module.exports.createNewPost = async (req, res) =>{
     let infoPost = {
       title: title,
       content: content,
-      userId: currentUser.id
+      userId: currentUser.id,
+      categoryId: categoryId
     }
 
     await postService.createNewPost(infoPost);
@@ -79,7 +81,6 @@ module.exports.updatePost = async (req, res) =>{
   let postId = req.params.id;
   let title = req.body.title;
   let content = req.body.content;
-
 
   try{
 

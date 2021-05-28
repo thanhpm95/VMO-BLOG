@@ -3,7 +3,7 @@ const db = require('../config/dbConnect')
 const sequelize = db.sequelize;
 const Sequelize = db.Sequelize;
 
-let Tag = sequelize.define('Tag', {
+const Tag = sequelize.define('Tag', {
   id:{
       type: Sequelize.INTEGER(11),
       primaryKey: true

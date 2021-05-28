@@ -8,7 +8,9 @@ import tagRouter from "./routers/tagRouter"
 
 const app = express()
 
-const port = 3002
+require('dotenv').config();
+
+const port = process.env.PORT
 
 const db = require('./config/dbConnect');
 

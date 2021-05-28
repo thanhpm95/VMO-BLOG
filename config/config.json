@@ -4,7 +4,13 @@
     "password": "Thanhkid1412ubqn@@",
     "database": "VmoBlog",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "token": {
+      "secret_access_token": "vmo-blog-phamminhthanh",
+      "secret_access_token_expire_in": 1000,
+      "secret_refresh_token": "vmo-blog-phamminhthanh-123456",
+      "secret_refresh_token_expire_in": 86400
+    }
   },
   "test": {
     "username": "root",

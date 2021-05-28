@@ -10,7 +10,16 @@ let Post = sequelize.define('Post', {
   },
   title: Sequelize.STRING,
   content: Sequelize.STRING,
-  userId: Sequelize.INTEGER
+  userId: Sequelize.INTEGER,
+  categoryId: Sequelize.INTEGER
 });
+
+Post.associate = function (models) {
+  Post.belongsTo(models.categoryModel, {
+    foreignKey: 'categoryId',
+ });
+
+}
+
 
 module.exports = Post;

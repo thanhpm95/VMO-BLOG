@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken"
 import {transErrors} from "../lang/vi"
 
-const SECRET_ACCESS_TOKEN = '123456'
-// const SECRET_REFRESH_ACCESS_TOKEN = '123456'
+const config = require("../config/config.json")
+
+
+const tokenSecretKey = config.development.token.secret_access_token;
 
 export function authenticate() {
   return (req, res, next) => {
@@ -11,7 +13,7 @@ export function authenticate() {
 
         //   console.log(token)
           try{
-            const user = jwt.verify(token, SECRET_ACCESS_TOKEN)
+            const user = jwt.verify(token, tokenSecretKey)
             // console.log(user)
             req.loginUser = user;
             return next();

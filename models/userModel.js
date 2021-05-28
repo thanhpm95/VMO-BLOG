@@ -3,7 +3,7 @@ const db = require('../config/dbConnect')
 const sequelize = db.sequelize;
 const Sequelize = db.Sequelize;
 
-let User = sequelize.define('User', {
+const User = sequelize.define('User', {
   id:{
       type: Sequelize.INTEGER(11),
       primaryKey: true
@@ -17,5 +17,7 @@ let User = sequelize.define('User', {
     default: 1
   }
 });
+
+
 
 module.exports = User;
