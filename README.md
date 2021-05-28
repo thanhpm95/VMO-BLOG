@@ -31,7 +31,7 @@ Các API hiện tại (test bằng Post man): https://www.getpostman.com/collect
   + api/post/:id (GET)  
   + api/post (POST) (authen)
   + api/post/:id (PATCH)  (chủ nhân của bài viết hoặc type 2 trở lên)
-  + api/post/:id (DELETE)  (type 2)
+  + api/post/:id (DELETE)  (chủ nhân của bài viết hoặc type 2 trở lên)
 
 - Category:
   + api/category (GET) 
